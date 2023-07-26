@@ -30,11 +30,6 @@
 				audio.currentTime = 0;
 			}
 		});
-    window.addEventListener('keydown', (e) => {
-      if (e.key === ' ') {
-        togglePause();
-      }
-    });
 		audio.addEventListener('ended', () => {
 			isPaused = true;
 		});
