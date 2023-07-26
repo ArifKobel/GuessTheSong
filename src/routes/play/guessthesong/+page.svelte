@@ -30,6 +30,11 @@
 				audio.currentTime = 0;
 			}
 		});
+    window.addEventListener('keydown', (e) => {
+      if (e.key === ' ') {
+        togglePause();
+      }
+    });
 		audio.addEventListener('ended', () => {
 			isPaused = true;
 		});
@@ -72,7 +77,9 @@
 			<div style="width: {percent}%;" class=" h-full bg-white rounded-full" />
 		</div>
 	</div>
-	<input bind:value={songName} placeholder="Song Name" type="text" class=" mt-4 w-72 h-12 rounded-md bg-gray-900 text-white text-xs outline-none px-4" />
+  <form on:submit={() => useAutoComplete(autoComplete[0].name)} action="">
+    <input bind:value={songName} placeholder="Song Name" type="text" class=" mt-4 w-72 h-12 rounded-md bg-gray-900 text-white text-xs outline-none px-4" />
+  </form>
   {#if autoComplete.length > 0}
     <div class=" mt-2 w-72 p-4 bg-gray-900 rounded-lg text-xs max-h-80 flex flex-col overflow-auto">
       {#each autoComplete as song}

@@ -1,5 +1,6 @@
 import type { song } from "$lib/types/songInterface";
 import { MongoClient } from "mongodb";
+import youtubeDl from "youtube-dl-exec";
 
 export class Database {
   private client: MongoClient | undefined;
@@ -10,6 +11,7 @@ export class Database {
   } 
   public async connect() {
     this.client = await MongoClient.connect(this.connectionString);
+    if (this.client)
     this.isConnected = true;
   }
   public async GetRandomSong() {
@@ -19,7 +21,22 @@ export class Database {
     const db = this.client!.db("GuessTheSong");
     const songs = db.collection("songs")
     const allSongs = await songs.find().toArray();
-    const randomSong = allSongs[Math.floor(Math.random() * allSongs.length)];
+    let randomSong = allSongs[Math.floor(Math.random() * allSongs.length)];
+    if (randomSong.url.includes("youtube.com")) {
+      const res = await youtubeDl(randomSong.url, {
+        dumpSingleJson: true,
+        noWarnings: true,
+        noCheckCertificates: true,
+        preferFreeFormats: true,
+        audioFormat: "mp3",
+        addHeader: [
+          'referer:youtube.com',
+          'user-agent:googlebot'
+        ]
+      })
+      // get audio url from res
+      randomSong.url = res.formats.find(format => format.format_id === "140")?.url;
+    }
     return randomSong;
   }
   public async SearchSongs(searchTerm: string) {

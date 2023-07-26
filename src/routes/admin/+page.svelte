@@ -25,7 +25,7 @@
       {#if autoComplete.length > 0}
       <div class=" mt-2 w-72 p-4 bg-gray-900 rounded-lg text-xs max-h-80 flex flex-col overflow-auto">
         {#each autoComplete as song}
-          <button type="button" class="hover:bg-gray-800 text-left p-4" on:click={() => useAutoComplete(song.name)}>
+          <button type="button" class="hover:bg-gray-800 text-left p-4 rounded-lg" on:click={() => useAutoComplete(song.name)}>
             <p>{song.name}</p>
           </button>
         {/each}
