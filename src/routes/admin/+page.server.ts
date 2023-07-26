@@ -3,6 +3,7 @@ import type { Actions } from './$types';
 import { Database } from '$lib/classes/database';
 import type { song } from '$lib/types/songInterface';
 import { ADMIN_PASSWORD, MONGODB_URI } from '$env/static/private';
+import youtubedl from "youtube-dl-exec";
 export const load = (async ({ params }) => {
 
 }) satisfies PageServerLoad;
@@ -20,6 +21,17 @@ export const actions: Actions = {
     const name = data.get("name");
     const artist = data.get("artist");
     const url = data.get("url");
+    const res = await youtubedl(url as string, {
+      dumpSingleJson: true,
+      noWarnings: true,
+      noCheckCertificates: true,
+      preferFreeFormats: true,
+      audioFormat: "mp3",
+      addHeader: [
+        'referer:youtube.com',
+        'user-agent:googlebot'
+      ]
+    })
     if (name === null || artist === null || url === null) {
       throw new Error("Missing required fields");
     }
@@ -29,7 +41,6 @@ export const actions: Actions = {
       url: url as string,
     }
     const result = await db.AddSong(song);
-    console.log(result);
   }
 } satisfies Actions;
 
