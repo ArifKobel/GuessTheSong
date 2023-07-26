@@ -1,8 +1,4 @@
-**Project "Guess the Song" Readme**
-
 # Guess the Song
-
-![Guess the Song Banner](link_to_banner_image)
 
 Welcome to the "Guess the Song" project! This project is built using SvelteKit for the frontend and MongoDB as the database. Additionally, we utilize the LastFM API to fetch song data. The main objective of this website is to allow users to guess songs based on their first 10 seconds.
 
@@ -32,7 +28,7 @@ We welcome contributions to improve the project! If you find any bugs or have su
 
 ## License
 
-This project is licensed under the [MIT License](link_to_license_file). Feel free to use and modify the code as per the terms of the license.
+This project is licensed under the [MIT License](https://github.com/ArifKobel/GuessTheSong/blob/main/.license). Feel free to use and modify the code as per the terms of the license.
 
 ## Acknowledgments
 
