@@ -29,7 +29,9 @@
 	"type": "module",
 	"dependencies": {
 		"axios": "^1.4.0",
+		"cloudinary": "^1.39.0",
 		"mongodb": "^5.7.0",
-		"youtube-dl-exec": "^2.4.6"
+		"youtube-dl-exec": "^2.4.6",
+		"ytdl-core": "^4.11.5"
 	}
 }

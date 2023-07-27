@@ -1,7 +1,8 @@
 import type { song } from "$lib/types/songInterface";
 import { MongoClient } from "mongodb";
 import youtubeDl from "youtube-dl-exec";
-
+import ytdl from "ytdl-core";
+import fs from "fs";
 export class Database {
   private client: MongoClient | undefined;
   public isConnected = false;
@@ -23,19 +24,7 @@ export class Database {
     const allSongs = await songs.find().toArray();
     let randomSong = allSongs[Math.floor(Math.random() * allSongs.length)];
     if (randomSong.url.includes("youtube.com")) {
-      const res = await youtubeDl(randomSong.url, {
-        dumpSingleJson: true,
-        noWarnings: true,
-        noCheckCertificates: true,
-        preferFreeFormats: true,
-        audioFormat: "mp3",
-        addHeader: [
-          'referer:youtube.com',
-          'user-agent:googlebot'
-        ]
-      })
-      // get audio url from res
-      randomSong.url = res.formats.find(format => format.format_id === "140")?.url;
+      db.collection("songs").deleteOne({ _id: randomSong._id });
     }
     return randomSong;
   }
