@@ -28,8 +28,10 @@
     }
   }
   const useAutoComplete = (name: string) => {
+    const save = songName;
     songName = name;
     submit();
+    songName = save;
   }
   onMount(() => {
     isLoading = false;
